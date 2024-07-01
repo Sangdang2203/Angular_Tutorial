@@ -1,0 +1,133 @@
+<div class="mat-elevation-z8">
+  <div class="flex justify-between mx-5">
+    <div class="flex items-center">
+
+      <button
+        title="Add new"
+        type="button"
+        class="mx-2 flex items-center p-3 rounded-lg shadow-md"
+        mat-raised-button
+        (click)="create()"
+      ><mat-icon
+          svgIcon="addPlus"
+          class="text-violet-800"
+        />
+        <p class="mx-2 uppercase">Add New</p>
+      </button>
+    </div>
+
+    <form class="search-form">
+      <mat-form-field class="w-full">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          matInput
+          placeholder="Enter ... to search"
+        >
+      </mat-form-field>
+    </form>
+  </div>
+
+
+  <table
+    mat-table
+    [dataSource]="contacts"
+  >
+
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+      > No. </th>
+      <td
+        mat-cell
+        *matCellDef="let item"
+      > {{item.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+      > Name </th>
+      <td
+        mat-cell
+        *matCellDef="let item"
+      > {{item.name}} </td>
+    </ng-container>
+
+    <!-- phone Column -->
+    <ng-container matColumnDef="phone">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+      > Phone </th>
+      <td
+        mat-cell
+        *matCellDef="let item"
+      > {{item.phone}} </td>
+    </ng-container>
+
+    <!-- email Column -->
+    <ng-container matColumnDef="email">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+      > Email </th>
+      <td
+        mat-cell
+        *matCellDef="let item"
+      > {{item.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="services">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+      >Services</th>
+      <td
+        mat-cell
+        *matCellDef="let item"
+      >{{item.services}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="handle">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+      >Handle</th>
+      <!-- <td mat-cell><a href="">
+          <mat-icon
+            svgIcon="edit"
+            class="text-green-700"
+          >Edit</mat-icon>
+        </a>
+        <a href="">
+          <mat-icon
+            svgIcon="trash"
+            class="text-red-700"
+          >Remove</mat-icon>
+        </a>
+      </td> -->
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns;"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic items"
+  >
+  </mat-paginator>
+</div>

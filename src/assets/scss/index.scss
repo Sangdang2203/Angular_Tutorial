@@ -1,0 +1,17 @@
+@import "theme";
+
+mat-error {
+  padding: 4px 0;
+}
+table {
+  width: 100%;
+}
+table > th {
+  text-transform: uppercase;
+}
+table > td:hover {
+  background: linear-gradient(
+    rbga(222, 222, 222, 0.6),
+    rbga(255, 255, 122, 0.8)
+  );
+}

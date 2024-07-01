@@ -1,0 +1,62 @@
+<div
+  class="login-theme min-h-screen flex items-center justify-center bg-cover bg-center"
+>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="login()"
+    class="wrapper backdrop-blur-md"
+  >
+    <p class="capitalize pb-10 pt-5 font">boostech System</p>
+    <!-- Email validation -->
+    <mat-form-field appearance="fill" class="my-2 min-w-[380px]">
+      <mat-icon class="text-black" matPrefix svgIcon="email"></mat-icon>
+      <input
+        matInput
+        autocomplete="off"
+        formControlName="email"
+        placeholder="Enter email"
+        required
+      />
+      <mat-error
+        class="min-h-2"
+        *ngIf="
+          form.controls.email.errors && form.controls.email.errors['required']
+        "
+      >
+        Email is required.
+      </mat-error>
+    </mat-form-field>
+    <!-- Password validation -->
+    <mat-form-field appearance="fill" class="my-2 min-w-[380px]">
+      <mat-icon class="text-black" matPrefix svgIcon="lock"></mat-icon>
+      <input
+        matInput
+        [type]="hidePassword() ? 'password' : 'text'"
+        formControlName="password"
+        placeholder="Enter password"
+        required
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="clickEvent($event)"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hidePassword()"
+      >
+        <mat-icon class="text-black">{{
+          hidePassword() ? "visibility_off" : "visibility"
+        }}</mat-icon>
+      </button>
+      <mat-error
+        *ngIf="
+          form.controls.password.errors &&
+          form.controls.password.errors['required']
+        "
+      >
+        Password is required.
+      </mat-error>
+    </mat-form-field>
+    <button id="button" type="submit">Login</button>
+  </form>
+</div>

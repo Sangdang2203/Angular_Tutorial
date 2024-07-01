@@ -1,0 +1,86 @@
+<div class="container">
+  <form
+    action=""
+    method="post"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Name | Company</mat-label>
+      <input
+        matInput[formControll]="name"
+        placeholder="Công ty công nghệ BooshTech"
+        (blur)="updateErrorMessage()"
+        required
+      >
+      <mat-icon svgIcon="addPlus"></mat-icon>
+      <mat-error *ngIf="name.invalid">{{errorMessage}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Phone number</mat-label>
+      <input
+        matInput[formControll]="phone"
+        #input
+        maxlength="10"
+        placeholder="0909751662"
+        (blur)="updateErrorMessage()"
+        required
+      >
+      <mat-hint align="end">{{input.value.length}}/10</mat-hint>
+      <mat-error *ngIf="phone.invalid">{{errorMessage}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email </mat-label>
+      <input
+        matInput[formControll]="email"
+        placeholder="jonathan@gmail.com"
+        (blur)="updateErrorMessage()"
+        required
+      >
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      <mat-error *ngIf="email.invalid">{{errorMessage}}</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Services</mat-label>
+      <mat-select
+        [formControl]="services"
+        multiple
+      >
+        <mat-select-trigger>
+          {{services.value?.[0] || ''}}
+          @if ((services.value?.length || 0) > 1) {
+          <span class="">
+            (+{{(services.value?.length || 0) - 1}} {{services.value?.length === 2 ? 'other' : 'others'}})
+          </span>
+          }
+        </mat-select-trigger>
+        @for (service of serviceList; track service) {
+        <mat-option [value]="service">{{service}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Message</mat-label>
+      <textarea
+        matInput
+        placeholder="Tell me what you need to support..."
+      ></textarea>
+    </mat-form-field>
+
+    <button
+      type="submit"
+      matIconPrefix=""
+      mat-raised-button
+      class="bg-sky-700 text-white hover:opacity-85"
+    >Send</button>
+    <button
+      type="reset"
+      matIconPrefix=""
+      mat-raised-button
+      class="bg-slate-700 text-white hover:opacity-85"
+    >Cancel</button>
+  </form>
+</div>

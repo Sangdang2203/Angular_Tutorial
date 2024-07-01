@@ -79,7 +79,7 @@ export class AccountComponent {
   createForm(): FormGroup<IFormGroup> {
     return this._formBuilder.group({
       email: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 

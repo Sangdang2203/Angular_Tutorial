@@ -45,13 +45,13 @@
           hide() ? "visibility_off" : "visibility"
         }}</mat-icon>
       </button>
-      <mat-error
-        *ngIf="
-          form.controls.password.errors &&
-          form.controls.password.errors['required']
-        "
-      >
-        Password is required.
+      <mat-error class="min-h-2" *ngIf="form.controls.password.errors">
+        <ng-container *ngIf="form.controls.password.errors['required']">
+          Password is required.
+        </ng-container>
+        <ng-container *ngIf="form.controls.password.errors['minlength']">
+          Password must have at least 8 letters.
+        </ng-container>
       </mat-error>
     </mat-form-field>
 

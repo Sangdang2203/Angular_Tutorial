@@ -2,6 +2,7 @@ import { Expose, Type } from "class-transformer";
 import { Default } from "../../core/decorators/default.decorator";
 import { BaseModel } from "../../core/models/base.model";
 import 'reflect-metadata';
+import { EmailValidator } from "@angular/forms";
 
 export class UserProfileModel {
     @Expose()

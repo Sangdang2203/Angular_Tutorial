@@ -6,6 +6,7 @@ import { AuthApiService } from '../../../shared/services/auth-api.service';
 import { GlobalService } from '../../../core/services/global.service';
 import { MESSAGE_TYPE } from '../../../core/models/message.model';
 import {
+  EmailValidator,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -62,8 +63,8 @@ export class LoginComponent {
 
   createForm(): FormGroup<IFormGroup> {
     return this._formBuilder.group({
-      email: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 

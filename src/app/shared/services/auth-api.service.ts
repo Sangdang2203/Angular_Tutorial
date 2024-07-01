@@ -23,7 +23,7 @@ export class AuthApiService {
                 name: "amy denonato",
                 avatar: "",
                 email: "amy_denonato@gmail.com",
-                password: "123456",
+                password: "12345678",
                 token: "aaaaaaa"
             },
             {
@@ -31,7 +31,7 @@ export class AuthApiService {
                 name: "sang dang",
                 avatar: "",
                 email: "sangdang@gmail.com",
-                password: "123456",
+                password: "12345678",
                 token: ""
             }
         ];

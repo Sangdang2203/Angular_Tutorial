@@ -18,9 +18,8 @@ export class AuthService {
         private _location: Location,
         private _localStorageService: LocalStorageService,
         private _authApiService: AuthApiService,
-    ) {
 
-    }
+    ) { }
 
     get isLoggedIn() {
         const isLogged = this._globalService.storage.get(AppConstant.GLOBAL_STORAGE.LOGIN_STATUS);
@@ -28,30 +27,15 @@ export class AuthService {
         return isLogged && currToken;
     }
 
-    // setLoggedIn(data: { accessToken: string }) {
-    //     if (this._localStorageService.storage) {
-    //         this._localStorageService.set(AppConstant.LOCAL_STORAGE_KEYS.TOKEN, data.accessToken);
-    //         this._localStorageService.set(AppConstant.LOCAL_STORAGE_KEYS.LOGIN_STATUS, true);
-    //     }
-    //     this._globalService.storage.dispatch(AppConstant.GLOBAL_STORAGE.TOKEN, data.accessToken);
-    //     this._globalService.storage.dispatch(AppConstant.GLOBAL_STORAGE.LOGIN_STATUS, true);
-    // }
-
-    setLoggedIn(data: { email: string; password: string }) {
-        this._authApiService.getUsers().subscribe((users: UserModel[]) => {
-            const matchedUser = users.find(
-                (user) => user.email === data.email && user.password === data.password
-            );
-
-            if (matchedUser) {
-                // Login successful: store token (consider secure storage)
-                localStorage.setItem('token', matchedUser.token);
-            } else {
-                // Login failed: display error message
-                console.error('Invalid email or password');
-            }
-        });
+    setLoggedIn(data: { accessToken: string }) {
+        if (this._localStorageService.storage) {
+            this._localStorageService.set(AppConstant.LOCAL_STORAGE_KEYS.TOKEN, data.accessToken);
+            this._localStorageService.set(AppConstant.LOCAL_STORAGE_KEYS.LOGIN_STATUS, true);
+        }
+        this._globalService.storage.dispatch(AppConstant.GLOBAL_STORAGE.TOKEN, data.accessToken);
+        this._globalService.storage.dispatch(AppConstant.GLOBAL_STORAGE.LOGIN_STATUS, true);
     }
+
 
     logout() {
         if (this._localStorageService.storage) {

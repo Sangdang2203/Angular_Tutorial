@@ -40,10 +40,10 @@ export const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [AuthGuard],
-    resolve: {
-      user: UserResolver,
-    },
+    // canActivate: [AuthGuard],
+    // resolve: {
+    //   user: UserResolver,
+    // },
     component: LayoutComponent,
     children: [
       {

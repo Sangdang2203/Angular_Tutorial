@@ -83,13 +83,14 @@ export class AccountComponent {
     });
   }
 
+
   login() {
     if (this.form.invalid) return;
 
     const data = this.form.getRawValue();
     this._authApiService.login(data).subscribe({
       next: (responseData: { accessToken: string }) => {
-        this._authService.setLoggedIn(data);
+        this._authService.setLoggedIn(responseData);
         this._globalService.message.next({
           type: MESSAGE_TYPE.success,
           message: 'Login successfully!',
@@ -104,26 +105,4 @@ export class AccountComponent {
       },
     });
   }
-
-  // login() {
-  //   if (this.form.invalid) return;
-
-  //   const data = this.form.getRawValue();
-  //   this._authApiService.login(data).subscribe({
-  //     next: (responseData: { accessToken: string }) => {
-  //       this._authService.setLoggedIn(responseData);
-  //       this._globalService.message.next({
-  //         type: MESSAGE_TYPE.success,
-  //         message: 'Login successfully!',
-  //       });
-  //       this._router.navigateByUrl(this.redirectUrl);
-  //     },
-  //     error: (err) => {
-  //       this._globalService.message.next({
-  //         type: MESSAGE_TYPE.error,
-  //         message: 'Username or password incorrect!',
-  //       });
-  //     },
-  //   });
-  // }
 }

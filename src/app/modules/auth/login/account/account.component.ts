@@ -1,7 +1,8 @@
+import { UserModel } from './../../../../shared/models/user.model';
 import { Component, signal } from '@angular/core';
 import { MESSAGE_TYPE } from '../../../../core/models/message.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IFormGroup } from '../login.component';
+import { IFormGroup, LoginComponent } from '../login.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthApiService } from '../../../../shared/services/auth-api.service';
 import { AuthService } from '../../auth.service';
@@ -27,6 +28,8 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: '../login.component.scss'
 })
 export class AccountComponent {
+  //private users: UserModel[] = [];
+
   users = [
     {
       id: 1,
@@ -74,6 +77,11 @@ export class AccountComponent {
   ) {
     this.form = this.createForm();
     this.redirectUrl = this._route.snapshot.queryParams['redirectUrl'] || '/';
+
+    this._authApiService.getUsers().subscribe((users: UserModel[]) => {
+      this.users = users;
+    });
+
   }
 
   createForm(): FormGroup<IFormGroup> {
@@ -84,25 +92,48 @@ export class AccountComponent {
   }
 
 
+  // login() {
+  //   if (this.form.invalid) return;
+
+  //   const data = this.form.getRawValue();
+  //   this._authApiService.login(data).subscribe({
+  //     next: (responseData: { accessToken: string }) => {
+  //       this._authService.setLoggedIn(responseData);
+  //       this._globalService.message.next({
+  //         type: MESSAGE_TYPE.success,
+  //         message: 'Login successfully!',
+  //       });
+  //       this._router.navigateByUrl(this.redirectUrl);
+  //     },
+  //     error: (err) => {
+  //       this._globalService.message.next({
+  //         type: MESSAGE_TYPE.error,
+  //         message: 'Username or password incorrect!',
+  //       });
+  //     },
+  //   });
+  // }
+
   login() {
     if (this.form.invalid) return;
 
     const data = this.form.getRawValue();
-    this._authApiService.login(data).subscribe({
-      next: (responseData: { accessToken: string }) => {
-        this._authService.setLoggedIn(responseData);
-        this._globalService.message.next({
-          type: MESSAGE_TYPE.success,
-          message: 'Login successfully!',
-        });
-        this._router.navigateByUrl(this.redirectUrl);
-      },
-      error: (err) => {
-        this._globalService.message.next({
-          type: MESSAGE_TYPE.error,
-          message: 'Username or password incorrect!',
-        });
-      },
-    });
+
+    const matchUser = this.users.find((user) => user.email === data.email)
+
+    if (matchUser && matchUser.password === data.password) {
+      this._router.navigateByUrl("/dashboard");
+      this._globalService.message.next({
+        type: MESSAGE_TYPE.success,
+        message: 'Login successfully!',
+      });
+    } else {
+      // Failed to login
+      this._router.navigateByUrl("/auth/login");
+      this._globalService.message.next({
+        type: MESSAGE_TYPE.error,
+        message: 'Email or password incorrect!',
+      });
+    }
   }
 }

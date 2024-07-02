@@ -31,7 +31,7 @@ export class AuthApiService {
                 name: "sang dang",
                 avatar: "",
                 email: "sangdang@gmail.com",
-                password: "12345678",
+                password: "12345aAA",
                 token: ""
             }
         ];

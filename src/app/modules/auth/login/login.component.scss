@@ -21,10 +21,18 @@
   margin: auto;
   padding: 1.25rem;
 
-  background-color: rgba(255, 255, 255, 0.2);
-  box-shadow: inset -5px -5px 250px 0 rgba(255, 255, 255, 0.02);
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  outline: none;
+  border-radius: 50px;
+  border: 2px solid #fff;
+
+  background: radial-gradient(
+    107.32% 141.42% at 0% 0%,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+
+  box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.75),
+    -5px -5px 250px 0px rgba(255, 255, 255, 0.02) inset;
+  backdrop-filter: blur(21px);
   transition: all 0.3s;
   height: auto;
   border-radius: 50px;
@@ -81,7 +89,7 @@ input:hover {
 }
 
 .font {
-  font-family: "poppins";
+  font-family: "Poppins";
   font-size: 35px;
   font-weight: 800;
   line-height: 52.5px;

@@ -1,8 +1,7 @@
 import { UserModel } from './../../../../shared/models/user.model';
 import { Component, signal } from '@angular/core';
 import { MESSAGE_TYPE } from '../../../../core/models/message.model';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IFormGroup, LoginComponent } from '../login.component';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthApiService } from '../../../../shared/services/auth-api.service';
 import { AuthService } from '../../auth.service';
@@ -12,6 +11,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+
+export interface IFormGroup {
+  //email: FormControl<string>;
+  password: FormControl<string>;
+}
 
 @Component({
   selector: 'app-account',
@@ -34,19 +38,11 @@ export class AccountComponent {
     {
       id: 1,
       name: "amy denonato",
-      avatar: "../../../../assets/images/avatar.png",
+      avatar: "https://images2.thanhnien.vn/528068263637045248/2024/6/1/4a51b369-61bb-44a3-8943-e69b4c7a1d1d-1717247991542752298657.jpeg",
       email: "amy_denonato@gmail.com",
-      password: "123456",
+      password: "12345678",
       token: "aaaaaaa"
     },
-    {
-      id: 2,
-      name: "sang dang",
-      avatar: "",
-      email: "sangdang@gmail.com",
-      password: "123456",
-      token: ""
-    }
   ]
 
   user: {
@@ -60,7 +56,11 @@ export class AccountComponent {
 
   hide = signal(true);
   clickEvent(event: MouseEvent) {
-    this.hide.set(!this.hide);
+    if (this.hide()) {
+      this.hide.set(false);
+    } else {
+      this.hide.set(true);
+    }
     event.stopPropagation();
   }
 
@@ -78,15 +78,14 @@ export class AccountComponent {
     this.form = this.createForm();
     this.redirectUrl = this._route.snapshot.queryParams['redirectUrl'] || '/';
 
-    this._authApiService.getUsers().subscribe((users: UserModel[]) => {
-      this.users = users;
-    });
+    // this._authApiService.getUsers().subscribe((users: UserModel[]) => {
+    //   this.users = users;
+    // });
 
   }
 
   createForm(): FormGroup<IFormGroup> {
     return this._formBuilder.group({
-      email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
@@ -119,9 +118,9 @@ export class AccountComponent {
 
     const data = this.form.getRawValue();
 
-    const matchUser = this.users.find((user) => user.email === data.email)
+    const matchUser = this.users.find((user) => user.id)
 
-    if (matchUser && matchUser.password === data.password) {
+    if (matchUser && matchUser.password.toLowerCase() === data.password.toLowerCase()) {
       this._router.navigateByUrl("/dashboard");
       this._globalService.message.next({
         type: MESSAGE_TYPE.success,
@@ -129,10 +128,10 @@ export class AccountComponent {
       });
     } else {
       // Failed to login
-      this._router.navigateByUrl("/auth/login");
+      this._router.navigateByUrl("/auth/account");
       this._globalService.message.next({
         type: MESSAGE_TYPE.error,
-        message: 'Email or password incorrect!',
+        message: 'Password incorrect!',
       });
     }
   }

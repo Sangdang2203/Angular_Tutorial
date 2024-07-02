@@ -6,11 +6,11 @@
     (ngSubmit)="login()"
     class="wrapper backdrop-blur-md shadow-lg"
   >
-    <h2 class="text-2xl font-medium capitalize pb-10 pt-3">boostech System</h2>
+    <p class="capitalize pb-10 pt-5 font">boostech System</p>
     <!-- Account info -->
     <div
       *ngFor="let user of users"
-      class="rounded-xl backdrop-blur-md shadow-lg w-[380px] h-[90px]"
+      class="rounded-xl backdrop-blur-md shadow-lg min-w-[380px] h-[90px]"
     >
       <div *ngIf="user.token.length != 0" class="flex flex-col items-center">
         <img
@@ -24,7 +24,7 @@
       </div>
     </div>
     <!-- Password validation -->
-    <mat-form-field appearance="fill" class="my-5">
+    <mat-form-field appearance="fill" class="my-5 display">
       <mat-icon class="text-black" matPrefix svgIcon="lock"></mat-icon>
       <input
         matInput
@@ -32,6 +32,7 @@
         formControlName="password"
         placeholder="Enter password"
         required
+        class="w-[380px]"
       />
       <button
         mat-icon-button

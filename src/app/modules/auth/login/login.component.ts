@@ -43,7 +43,11 @@ export class LoginComponent {
 
   hidePassword = signal(true);
   clickEvent(event: MouseEvent) {
-    this.hidePassword.set(!this.hidePassword);
+    if (this.hidePassword()) {
+      this.hidePassword.set(false);
+    } else {
+      this.hidePassword.set(true);
+    }
     event.stopPropagation();
   }
 
@@ -101,9 +105,9 @@ export class LoginComponent {
 
     const data = this.form.getRawValue();
 
-    const matchUser = this.users.find((user) => user.email === data.email)
+    const matchUser = this.users.find((user) => user.email.toLowerCase() === data.email.toLowerCase())
 
-    if (matchUser && matchUser.password === data.password) {
+    if (matchUser && matchUser.password.toLowerCase() === data.password.toLowerCase()) {
       this._router.navigateByUrl("/dashboard");
       this._globalService.message.next({
         type: MESSAGE_TYPE.success,
